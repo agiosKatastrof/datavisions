@@ -3,7 +3,6 @@
 from covid19 import findFilesToProcess, parsePdf, findFilesToProcess, processFile
 
 mypath = '/home/joe/data/covid19/who'   #where the pdfs are
-#mypath = '/run/user/1000/gvfs/smb-share:server=majesty.local,share=filesjoe/data/who_covid19_reports/renamed'
 filelist = '/home/joe/data/covid19/filelist'  # list of processed files
 summary = '/home/joe/data/covid19/summary' # summary data
 
