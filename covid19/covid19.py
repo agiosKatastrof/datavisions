@@ -41,7 +41,7 @@ def findChina(tables):
                 output = re.split('\\s+',df['Cumulative'].iloc[-1])
     return output
 
-def processFile(mypath,filelist,summary,f):
+def processFile(mypath,filelist,summary,f,runmode):
     date, ext = f.split('.')
     ffile = '/'.join([mypath,f])
 
@@ -63,14 +63,16 @@ def processFile(mypath,filelist,summary,f):
     chinaVals = ",".join(str(x) for x in chinaNumbers)
     
     try:
-        summary.write(chinaVals + "\n")
+        if runmode > 0: 
+            summary.write(chinaVals + "\n")
     except OSError:
         print("could not append ", summary)
         sys.exit()
 
     try:
-        print("update filelist ")
-        fl.write(f + "\n")
+        if runmode > 0:
+            print("update filelist ")
+            fl.write(f + "\n")
     except OSError:
         print("could not append ", filelist)
         sys.exit()
