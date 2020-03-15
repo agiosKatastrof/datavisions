@@ -10,6 +10,7 @@ dfToProcess = findFilesToProcess(mypath,filelist)
 rows, columns = dfToProcess.shape
 
 runmode = 0 # does not write
+#runmode = 1 # writes
 
 if (rows > 0): #there are files to process
     #f = dfToProcess['file'].iloc[0]  # just do one file

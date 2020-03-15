@@ -6,6 +6,7 @@ import dill
 import re
 import sys
 import csv
+import subprocess
 from os import listdir
 from os.path import isfile, join
 
@@ -24,11 +25,15 @@ def findFilesToProcess(mypath,filelist):
     return dfFiles[dfFiles['file'].isin(dfDone['file']) == False]
 
 def parsePdf(f):
-    
-    tables = tabula.read_pdf(f, pages = "all", multiple_tables = True)
-    chinaNumbers = findChina(tables)
-       
-    return chinaNumbers   
+   cmd = ['pdf2txt.py','-S','-t','text',f]
+   process = subprocess.run(cmd, capture_output=True)
+   if (process.stderr):
+       out = process.stderr
+       print(out)
+   else:
+       out = process.stdout
+
+   return out
 
 def findChina(tables):
 # from the list of tables (dfs), find the one with china - return cumulative cases and deaths
@@ -57,10 +62,13 @@ def processFile(mypath,filelist,summary,f,runmode):
         print("could not open summary to append ", summary)
         sys.exit()
     
-    chinaNumbers = parsePdf(ffile)
-    chinaNumbers.insert(0,'china')
-    chinaNumbers.insert(0,date)
-    chinaVals = ",".join(str(x) for x in chinaNumbers)
+    out = parsePdf(ffile)
+    print(out)
+
+   # chinaNumbers.insert(0,'china')
+  #  chinaNumbers.insert(0,date)
+  #  chinaVals = ",".join(str(x) for x in chinaNumbers)
+    chinaVals = 0
     
     try:
         if runmode > 0: 
