@@ -1,12 +1,12 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import tabula
 import dill
 import re
 import sys
 import csv
 import subprocess
+import string
 from os import listdir
 from os.path import isfile, join
 
@@ -71,6 +71,10 @@ def findChina(l,m):
         chinaNum = re.search(pattern,m)
         if(chinaNum):
             returnChina = chinaNum.group()
+            pattern = r'(confirmed|\s+)'
+            p = re.compile(pattern)
+            returnChina = p.sub('',returnChina)
+            returnChina.strip()
             print("found china", returnChina)
 
     return returnChina
@@ -83,6 +87,8 @@ def findDate(l):
     date = re.search(pattern,l)
     if(date):
         returnDate = date.group()
+        returnDate = returnDate[3:]
+        returnDate = returnDate.strip()
         print("found the date ", returnDate)
 
     return returnDate
