@@ -1,9 +1,11 @@
+#!/usr/bin/env python
+
 import re
 import os
 from os import listdir
 from os.path import isfile, join
 
-mypath = '/home/joe/who'
+mypath = '/home/joe/temp'
 files = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 for f in files:
     match = re.match(r"\d{8}",f)
