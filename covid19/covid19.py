@@ -70,37 +70,42 @@ def findChina(l,m,n,o):
 
     china = re.search(pattern,l)
     if(china):
-        pattern = r'\d+\s+\d+\s+confirmed\s+'
         m = str(m)
+        n = str(n)
+        o = str(o)
+
+        pattern = r'(\s+)'
+        p = re.compile(pattern)
+        m = p.sub('',m)
+        n = p.sub('',n)
+        o = p.sub('',o)
+
+        pattern = r'\d+confirmed'
         chinaNum = re.search(pattern,m)
+
         if(chinaNum):
             returnChina = ['china']
             chinaCases = chinaNum.group()
-            pattern = r'(confirmed|\s+)'
+            pattern = r'(confirmed)'
             p = re.compile(pattern)
             chinaCases = p.sub('',chinaCases)
-            chinaCases.strip()
             returnChina.append(chinaCases)
 
-            n = str(n)
-            pattern = r'(\s*\d+\s+\d+\s+death|\s*\d+\s+death)'
+            pattern = r'(\d+death)'
             chinaDeaths = re.search(pattern,n)
             if(chinaDeaths):
                 chinaDeathN = chinaDeaths.group()
-                pattern = r'(death|\s+)'
+                pattern = r'(death)'
                 p = re.compile(pattern)
                 chinaDeathN = p.sub('',chinaDeathN)
-                chinaDeathN.strip()
                 returnChina.append(chinaDeathN)
             else:
-                o = str(o)
                 chinaDeaths = re.search(pattern,o)
                 if(chinaDeaths):
                     chinaDeathN = chinaDeaths.group()
-                    pattern = r'(death|\s+)'
+                    pattern = r'(death)'
                     p = re.compile(pattern)
                     chinaDeathN = p.sub('',chinaDeathN)
-                    chinaDeathN.strip()
                     returnChina.append(chinaDeathN)
 
             print("found china", returnChina)
