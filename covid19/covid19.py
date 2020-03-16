@@ -49,9 +49,10 @@ def processOutput(output):
 
         # find the date 
         if (date is None):
-            date = findDate(l)
-            if (date is not None):
-                output.append(date)
+            dateFound = findDate(l)
+            if (dateFound is not None):
+                date = dateFound
+                output.insert(0,date)
             
         # find China 
         if (china is None):
@@ -59,7 +60,7 @@ def processOutput(output):
             if (china is not None):
                 for item in china:
                     output.append(item)
-    
+
         i += 1
     return output
 
