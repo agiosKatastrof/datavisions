@@ -52,14 +52,14 @@ def processOutput(output):
             
         # find China 
         if (china is None):
-            china = findChina(l,outlist[i+1])
+            china = findChina(l,outlist[i+1],outlist[i+2])
             if (china is not None):
                 print(china)
     
         i += 1
     return 
 
-def findChina(l,m):  
+def findChina(l,m,n):  
     returnChina = None
     print("looking for china")
     pattern = r'China'
@@ -70,11 +70,25 @@ def findChina(l,m):
         m = str(m)
         chinaNum = re.search(pattern,m)
         if(chinaNum):
-            returnChina = chinaNum.group()
+            returnChina = []
+            chinaCases = chinaNum.group()
             pattern = r'(confirmed|\s+)'
             p = re.compile(pattern)
-            returnChina = p.sub('',returnChina)
-            returnChina.strip()
+            chinaCases = p.sub('',chinaCases)
+            chinaCases.strip()
+            returnChina.append(chinaCases)
+
+            n = str(n)
+            pattern = r'\s*\d+\s*\d+\s+deaths\s+'
+            chinaDeaths = re.search(pattern,n)
+            if(chinaDeaths):
+                chinaDeathN = chinaDeaths.group()
+                pattern = r'(deaths|\s+)'
+                p = re.compile(pattern)
+                chinaDeathN = p.sub('',chinaDeathN)
+                chinaDeathN.strip()
+                returnChina.append(chinaDeathN)
+
             print("found china", returnChina)
 
     return returnChina
