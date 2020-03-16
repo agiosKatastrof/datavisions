@@ -38,6 +38,9 @@ def processOutput(output):
     outlist = output.splitlines()
     print("found ", len(outlist), " rows")
     i = 0
+
+    output = []
+
     date = None
     china = None
 
@@ -48,20 +51,21 @@ def processOutput(output):
         if (date is None):
             date = findDate(l)
             if (date is not None):
-                print(date)
+                output.append(date)
             
         # find China 
         if (china is None):
             china = findChina(l,outlist[i+1],outlist[i+2])
             if (china is not None):
-                print(china)
+                for item in china:
+                    output.append(item)
     
         i += 1
-    return 
+    return output
 
 def findChina(l,m,n):  
     returnChina = None
-    print("looking for china")
+    #print("looking for china")
     pattern = r'China'
 
     china = re.search(pattern,l)
@@ -70,7 +74,7 @@ def findChina(l,m,n):
         m = str(m)
         chinaNum = re.search(pattern,m)
         if(chinaNum):
-            returnChina = []
+            returnChina = ['china']
             chinaCases = chinaNum.group()
             pattern = r'(confirmed|\s+)'
             p = re.compile(pattern)
@@ -95,7 +99,7 @@ def findChina(l,m,n):
 
 def findDate(l):
     returnDate = None
-    print("looking for the date")
+    #print("looking for the date")
     pattern = r'CET\s+\d+\s+\D+\s+2020'
 
     date = re.search(pattern,l)
@@ -103,6 +107,9 @@ def findDate(l):
         returnDate = date.group()
         returnDate = returnDate[3:]
         returnDate = returnDate.strip()
+        pattern = r'(\s+)'
+        p = re.compile(pattern)
+        returnDate = p.sub('-',returnDate)
         print("found the date ", returnDate)
 
     return returnDate
@@ -124,13 +131,6 @@ def processFile(mypath,filelist,summary,f,runmode):
         sys.exit()
     
     out = parsePdf(ffile)
-    print(out)
-
-
-   # chinaNumbers.insert(0,'china')
-  #  chinaNumbers.insert(0,date)
-  #  chinaVals = ",".join(str(x) for x in chinaNumbers)
-    chinaVals = 0
     
     try:
         if runmode > 0: 
@@ -159,4 +159,4 @@ def processFile(mypath,filelist,summary,f,runmode):
         print("could not close file list ", filelist)
         sys.exit()
         
-    return chinaVals
+    return out
