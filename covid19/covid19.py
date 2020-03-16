@@ -80,13 +80,13 @@ def findChina(l,m,n,o):
         n = p.sub('',n)
         o = p.sub('',o)
 
-        pattern = r'\d+confirmed'
+        pattern = r'(\d+confirmed|\d+laboratory-confirmed)'
         chinaNum = re.search(pattern,m)
 
         if(chinaNum):
             returnChina = ['china']
             chinaCases = chinaNum.group()
-            pattern = r'(confirmed)'
+            pattern = r'(confirmed|laboratory-confirmed)'
             p = re.compile(pattern)
             chinaCases = p.sub('',chinaCases)
             returnChina.append(chinaCases)
@@ -108,7 +108,7 @@ def findChina(l,m,n,o):
                     chinaDeathN = p.sub('',chinaDeathN)
                     returnChina.append(chinaDeathN)
 
-            print("found china", returnChina)
+            # print("found china", returnChina)
 
     return returnChina
 
