@@ -37,37 +37,48 @@ def parsePdf(f):
 def processOutput(output):
     outlist = output.splitlines()
     print("found ", len(outlist), " rows")
-    date = 'N/A'
     i = 0
     date = None
+    china = None
+
     for l in outlist: 
         l = str(l)
 
         # find the date 
         if (date is None):
             date = findDate(l)
-
             if (date is not None):
                 print(date)
             
         # find China 
-        pattern = 'China'
-        china = re.search(pattern,l)
-        if(china):
-            print(i, " china ",china.group())
-            nextl = str(outlist[i+1])
-            pattern = '\d+\s*\d+\s+confirmed'
-            chinaConfirmed = re.search(pattern,nextl)
-
-
+        if (china is None):
+            china = findChina(l,outlist[i+1])
+            if (china is not None):
+                print(china)
     
         i += 1
     return 
 
+def findChina(l,m):  
+    returnChina = None
+    print("looking for china")
+    pattern = r'China'
+
+    china = re.search(pattern,l)
+    if(china):
+        pattern = r'\d+\s*\d+\s+confirmed\s+'
+        m = str(m)
+        chinaNum = re.search(pattern,m)
+        if(chinaNum):
+            returnChina = chinaNum.group()
+            print("found china", returnChina)
+
+    return returnChina
+
 def findDate(l):
     returnDate = None
     print("looking for the date")
-    pattern = '\s+\d+\s+\D+\s+2020'
+    pattern = r'CET\s+\d+\s+\D+\s+2020'
 
     date = re.search(pattern,l)
     if(date):
@@ -75,17 +86,6 @@ def findDate(l):
         print("found the date ", returnDate)
 
     return returnDate
-
-def findChina(tables):
-# from the list of tables (dfs), find the one with china - return cumulative cases and deaths
-    x = 'Province/' # id China with this
-    y = 'Hubei'# id China with this
-    output = ['N/A','N/A']
-    for df in tables:
-        if (x in df.columns.values):
-            if (y in df[x].tolist()):
-                output = re.split('\\s+',df['Cumulative'].iloc[-1])
-    return output
 
 def processFile(mypath,filelist,summary,f,runmode):
     date, ext = f.split('.')
