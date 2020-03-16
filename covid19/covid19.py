@@ -159,7 +159,8 @@ def processFile(mypath,filelist,summary,f,runmode):
     
     try:
         if runmode > 0: 
-            summary.write(chinaVals + "\n")
+            output = ','.join(out)
+            summary.write(output + "\n")
     except OSError:
         print("could not append ", summary)
         sys.exit()
