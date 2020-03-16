@@ -3,6 +3,7 @@
 from covid19 import findFilesToProcess, parsePdf, findFilesToProcess, processFile
 
 mypath = '/home/joe/data/covid19/who'   #where the pdfs are
+mypath = '/home/joe/data/covid19/who/actual'   #where the pdfs are
 filelist = '/home/joe/data/covid19/filelist'  # list of processed files
 summary = '/home/joe/data/covid19/summary' # summary data
 

@@ -36,7 +36,7 @@ def parsePdf(f):
 
 def processOutput(output):
     outlist = output.splitlines()
-    print("found ", len(outlist), " rows")
+#    print("found ", len(outlist), " rows")
     i = 0
 
     output = []
@@ -55,7 +55,7 @@ def processOutput(output):
             
         # find China 
         if (china is None):
-            china = findChina(l,outlist[i+1],outlist[i+2])
+            china = findChina(l,outlist[i+1],outlist[i+2],outlist[i+3])
             if (china is not None):
                 for item in china:
                     output.append(item)
@@ -63,14 +63,14 @@ def processOutput(output):
         i += 1
     return output
 
-def findChina(l,m,n):  
+def findChina(l,m,n,o):  
     returnChina = None
     #print("looking for china")
     pattern = r'China'
 
     china = re.search(pattern,l)
     if(china):
-        pattern = r'\d+\s*\d+\s+confirmed\s+'
+        pattern = r'\d+\s+\d+\s+confirmed\s+'
         m = str(m)
         chinaNum = re.search(pattern,m)
         if(chinaNum):
@@ -83,15 +83,25 @@ def findChina(l,m,n):
             returnChina.append(chinaCases)
 
             n = str(n)
-            pattern = r'\s*\d+\s*\d+\s+deaths\s+'
+            pattern = r'(\s*\d+\s+\d+\s+death|\s*\d+\s+death)'
             chinaDeaths = re.search(pattern,n)
             if(chinaDeaths):
                 chinaDeathN = chinaDeaths.group()
-                pattern = r'(deaths|\s+)'
+                pattern = r'(death|\s+)'
                 p = re.compile(pattern)
                 chinaDeathN = p.sub('',chinaDeathN)
                 chinaDeathN.strip()
                 returnChina.append(chinaDeathN)
+            else:
+                o = str(o)
+                chinaDeaths = re.search(pattern,o)
+                if(chinaDeaths):
+                    chinaDeathN = chinaDeaths.group()
+                    pattern = r'(death|\s+)'
+                    p = re.compile(pattern)
+                    chinaDeathN = p.sub('',chinaDeathN)
+                    chinaDeathN.strip()
+                    returnChina.append(chinaDeathN)
 
             print("found china", returnChina)
 
@@ -100,12 +110,11 @@ def findChina(l,m,n):
 def findDate(l):
     returnDate = None
     #print("looking for the date")
-    pattern = r'CET\s+\d+\s+\D+\s+2020'
+    pattern = r'\s+\d+\s+\D+\s+2020'
 
     date = re.search(pattern,l)
     if(date):
         returnDate = date.group()
-        returnDate = returnDate[3:]
         returnDate = returnDate.strip()
         pattern = r'(\s+)'
         p = re.compile(pattern)
