@@ -31,9 +31,26 @@ def parsePdf(f):
        out = process.stderr
        print(out)
    else:
-       out = process.stdout
-
+       out = processOutput(process.stdout)
    return out
+
+def processOutput(output):
+    outlist = output.splitlines()
+    print("found ", len(outlist), " rows")
+    n = 5
+    for i in range(n): # find the date 
+        l = str(outlist[i])
+        print(l)
+        pattern = '\s+\d+\s+\D+\s+2020'
+        date = re.search(pattern,l)
+        if(date):
+            print("YES")
+            print("date ",date.group())
+            break
+        else:
+            print("could not find the date")
+
+    return 
 
 def findChina(tables):
 # from the list of tables (dfs), find the one with china - return cumulative cases and deaths
@@ -64,6 +81,7 @@ def processFile(mypath,filelist,summary,f,runmode):
     
     out = parsePdf(ffile)
     print(out)
+
 
    # chinaNumbers.insert(0,'china')
   #  chinaNumbers.insert(0,date)
