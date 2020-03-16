@@ -37,20 +37,44 @@ def parsePdf(f):
 def processOutput(output):
     outlist = output.splitlines()
     print("found ", len(outlist), " rows")
-    n = 5
-    for i in range(n): # find the date 
-        l = str(outlist[i])
-        print(l)
-        pattern = '\s+\d+\s+\D+\s+2020'
-        date = re.search(pattern,l)
-        if(date):
-            print("YES")
-            print("date ",date.group())
-            break
-        else:
-            print("could not find the date")
+    date = 'N/A'
+    i = 0
+    date = None
+    for l in outlist: 
+        l = str(l)
 
+        # find the date 
+        if (date is None):
+            date = findDate(l)
+
+            if (date is not None):
+                print(date)
+            
+        # find China 
+        pattern = 'China'
+        china = re.search(pattern,l)
+        if(china):
+            print(i, " china ",china.group())
+            nextl = str(outlist[i+1])
+            pattern = '\d+\s*\d+\s+confirmed'
+            chinaConfirmed = re.search(pattern,nextl)
+
+
+    
+        i += 1
     return 
+
+def findDate(l):
+    returnDate = None
+    print("looking for the date")
+    pattern = '\s+\d+\s+\D+\s+2020'
+
+    date = re.search(pattern,l)
+    if(date):
+        returnDate = date.group()
+        print("found the date ", returnDate)
+
+    return returnDate
 
 def findChina(tables):
 # from the list of tables (dfs), find the one with china - return cumulative cases and deaths
