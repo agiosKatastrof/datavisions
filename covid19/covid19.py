@@ -55,7 +55,7 @@ def processOutput(output):
             
         # find China 
         if (china is None):
-            china = findChina(l,outlist[i+1],outlist[i+2],outlist[i+3])
+            china = findChina(l,outlist[i+1],outlist[i+2],outlist[i+3],outlist[i+4])
             if (china is not None):
                 for item in china:
                     output.append(item)
@@ -63,7 +63,7 @@ def processOutput(output):
         i += 1
     return output
 
-def findChina(l,m,n,o):  
+def findChina(l,m,n,o,q):  
     returnChina = None
     #print("looking for china")
     pattern = r'China'
@@ -73,12 +73,14 @@ def findChina(l,m,n,o):
         m = str(m)
         n = str(n)
         o = str(o)
+        q = str(q)
 
         pattern = r'(\s+)'
         p = re.compile(pattern)
         m = p.sub('',m)
         n = p.sub('',n)
         o = p.sub('',o)
+        q = p.sub('',q)
 
         pattern = r'(\d+confirmed|\d+laboratory-confirmed)'
         chinaNum = re.search(pattern,m)
@@ -91,6 +93,7 @@ def findChina(l,m,n,o):
             chinaCases = p.sub('',chinaCases)
             returnChina.append(chinaCases)
 
+            # should really just maket his recursive
             pattern = r'(\d+death)'
             chinaDeaths = re.search(pattern,n)
             if(chinaDeaths):
@@ -107,6 +110,14 @@ def findChina(l,m,n,o):
                     p = re.compile(pattern)
                     chinaDeathN = p.sub('',chinaDeathN)
                     returnChina.append(chinaDeathN)
+                else:
+                    chinaDeaths = re.search(pattern,q)
+                    if(chinaDeaths):
+                        chinaDeathN = chinaDeaths.group()
+                        pattern = r'(death)'
+                        p = re.compile(pattern)
+                        chinaDeathN = p.sub('',chinaDeathN)
+                        returnChina.append(chinaDeathN)
 
             # print("found china", returnChina)
 
