@@ -1,1 +1,5 @@
-pdf2txt.py -S -t text /home/joe/data/covid19/who/2020-03-06.pdf
+#!/bin/bash
+
+echo "parse $1"
+#pdf2txt.py -S -t text /home/joe/data/covid19/who/2020-03-06.pdf
+pdf2txt.py -S -t text $1 
