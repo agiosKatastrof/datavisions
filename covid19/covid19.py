@@ -141,6 +141,7 @@ def findDate(l):
     return returnDate
 
 def processFile(mypath,filelist,summary,f,runmode):
+    print("process ", f)
     date, ext = f.split('.')
     ffile = '/'.join([mypath,f])
 

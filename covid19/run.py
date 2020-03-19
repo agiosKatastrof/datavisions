@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sys
+import sys, getopt
 
 from covid19 import findFilesToProcess, parsePdf, findFilesToProcess, processFile
 
@@ -10,20 +10,40 @@ summary = '/home/joe/data/covid19/summary' # summary data
 
 def main(argv):
 
-    runmode = 0 # does not write, value of >0 writes
-    if (len(sys.argv) > 1):
-        print("writing files")
-        runmode = 1
+    runmode = 0
+    datadir = None
+    filelist = None
+    summary = None
 
-    dfToProcess = findFilesToProcess(mypath,filelist)
+    usage = 'run.py -r -d <datadir> -f <filelist> -s <summary>'
+
+    try:
+        opts, args = getopt.getopt(argv,"rd:f:s:",["d=","f=","s="])
+    except getopt.GetoptError:
+        print(usage)
+        sys.exit(2)
+
+    for opt, arg in opts:
+        if opt == '-h':
+            print(usage)
+            sys.exit()
+        elif opt == '-r':
+            runmode = 1
+            print("doing an actual run")
+        elif opt in ("-d"):
+            datadir = arg
+        elif opt in ("-f"):
+            filelist = arg
+        elif opt in ("-s"):
+            summary = arg
+
+    dfToProcess = findFilesToProcess(datadir,filelist)
     rows, columns = dfToProcess.shape
 
-
     if (rows > 0): #there are files to process
-        #f = dfToProcess['file'].iloc[0]  # just do one file
         for f in dfToProcess['file'].tolist():   
             print("found to process: ", f)
-            out = processFile(mypath,filelist,summary,f,runmode)
+            out = processFile(datadir,filelist,summary,f,runmode)
             print("output: ", out) 
 
 if __name__ == "__main__":
