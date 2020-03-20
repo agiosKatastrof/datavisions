@@ -44,6 +44,13 @@ def processOutput(output):
     date = None
     china = None
 
+    WPR = 'Western Pacific Region'
+    EUR = 'European Region'
+
+    regions = [WPR,EUR]
+
+    fWPR = None
+
     for l in outlist: 
         l = str(l)
 
@@ -60,9 +67,26 @@ def processOutput(output):
             if (china is not None):
                 for item in china:
                     output.append(item)
+                
+        #find WPR
+        if (fWPR is None):
+            fWPR = parseRegion(WPR,i,outlist)
+
 
         i += 1
     return output
+
+def parseRegion(region,i,outlist,regions):
+    print("processing region: ", region)
+
+    j = 0
+    while (j < len(regions)): 
+        if (regions[j]: 
+        res.append(i) 
+    j += 1
+    outlist[i]
+
+    return 1
 
 def findChina(l,m,n,o,q):  
     returnChina = None
