@@ -1,5 +1,4 @@
 import boto3
-import datetime
 
 def getMetricStats(InstanceId,metric,namespace,startt,endt,period,stats,unit):
     print('get ', metric, ' for ', InstanceId)
