@@ -1,8 +1,8 @@
 import boto3
 import datetime
 
-def getMetrics(InstanceId,metric,namespace,startt,endt):
-    print('get metrics')
+def getMetricStats(InstanceId,metric,namespace,startt,endt,period,stats,unit):
+    print('get ', metric, ' for ', InstanceId)
     cw = boto3.client('cloudwatch')
 
     response = cw.get_metric_statistics(
@@ -16,11 +16,11 @@ def getMetrics(InstanceId,metric,namespace,startt,endt):
         ],
         StartTime=startt,
         EndTime=endt,
-        Period=360,
+        Period=period,
         Statistics=[
-            'Maximum',
+            stats,
         ],
-        Unit='Percent'
+        Unit=unit
 )
 
     return response
