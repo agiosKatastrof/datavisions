@@ -3,13 +3,15 @@
 import sys, getopt
 
 from cloudwatch import getMetrics
-id = 'i-0ca364ec6656ff517'
+instanceId = 'i-0ca364ec6656ff517'
+metric = 'CPUUtilization'
+namespace = 'AWS/EC2'
+startt = '2020-03-22T22:23:00'
+endt = '2020-03-23T23:23:00'
 
 
 def main(argv):
-
-    usage = 'run.py -r -d <datadir> -f <filelist> -s <summary>'
-    response = getMetrics(id)
+    response = getMetrics(instanceId,metric,namespace,startt,endt)
     print(response)
 
 if __name__ == "__main__":

@@ -1,21 +1,21 @@
 import boto3
 import datetime
 
-def getMetrics(InstanceId):
+def getMetrics(InstanceId,metric,namespace,startt,endt):
     print('get metrics')
     cw = boto3.client('cloudwatch')
 
     response = cw.get_metric_statistics(
-        Namespace='AWS/EC2',
-        MetricName='CPUUtilization',
+        Namespace=namespace,
+        MetricName=metric,
         Dimensions=[
             {
                 'Name': 'InstanceId',
                 'Value': InstanceId
             },
         ],
-        StartTime='2020-03-22T23:23:00',
-        EndTime='2020-03-23T23:23:00',
+        StartTime=startt,
+        EndTime=endt,
         Period=360,
         Statistics=[
             'Maximum',
