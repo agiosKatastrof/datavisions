@@ -21,8 +21,10 @@ instanceStates = ['running','stopped','rebooting','shuttding-down','terminated',
 def main(argv):
     usage = 'aws.py <-i|-u>'
 
+    verbose = None
+
     try:
-        opts, args = getopt.getopt(argv,"iu")
+        opts, args = getopt.getopt(argv,"iuv")
     except:
         print(usage)
         sys.exit(2)
@@ -35,17 +37,16 @@ def main(argv):
             print('get instances only')                   
             for instance in getEC2Instances(instanceStates).items():
                 print(instance)
-
             sys.exit(0)
         elif opt == '-u':
-            print('get instances and utilizations')
-            getEC2Instances(instancStates)
-
-            response = getMetricStats(instanceId,metric,namespace,startt,endt,period,stats,unit)
-            for item in response['Datapoints']:
-                print(item['Timestamp'],end=",")
-                print(instanceId,end=",")
-                print(item[stats])
+            #print('get instances and utilizations')
+            for instanceId in getEC2Instances(instanceStates):
+                #print('get metrics for ', instanceId)
+                response = getMetricStats(instanceId,metric,namespace,startt,endt,period,stats,unit)
+                for item in response['Datapoints']:
+                    print(item['Timestamp'],end=",")
+                    print(instanceId,end=",")
+                    print(item[stats])
 
 
 if __name__ == "__main__":
