@@ -1,7 +1,6 @@
 import boto3
 
 def getMetricStats(InstanceId,metric,namespace,startt,endt,period,stats,unit):
-#    print('get ', metric, ' for ', InstanceId)
     cw = boto3.client('cloudwatch')
 
     response = cw.get_metric_statistics(
