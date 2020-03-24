@@ -2,13 +2,14 @@
 
 import sys, getopt
 import json
+import datetime
 
 from cloudwatch import getMetricStats
 instanceId = 'i-0ca364ec6656ff517'
 metric = 'CPUUtilization'
 namespace = 'AWS/EC2'
-startt = '2020-03-23T01:00:00'
-endt = '2020-03-24T01:00:00'
+startt = datetime.datetime(2020,3,23,1)
+endt = datetime.datetime(2020,3,24,1)
 period = 300
 stats = 'Maximum'
 unit = 'Percent'
