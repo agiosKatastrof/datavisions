@@ -1,0 +1,1 @@
+aws cloudwatch get-metric-statistics --namespace AWS/EC2 --metric-name CPUUtilization --dimensions Name=InstanceId,Value=i-0ca364ec6656ff517 --statistics Maximum --start-time 2020-03-18T23:18:00 --end-time 2020-03-24T23:18:00 --period 360
