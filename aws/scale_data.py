@@ -4,10 +4,15 @@ import sys, getopt
 import json
 import datetime
 
-from scale import genWeight
+from scale import boundaryScale
 
 scaleFactor = 100
-scaleRange = [10,9,8,7,6,5,3,1]
+scaleRange = [10,8,5,1]
 
-weight = genWeight(scaleFactor,scaleRange)
-print(weight)
+
+inN = [0.11,0.22,0.1234,0.0,0.5]
+
+outN = boundaryScale(scaleFactor,scaleRange, inN)
+
+print(outN)
+
