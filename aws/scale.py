@@ -6,10 +6,9 @@ def genWeight(scaleFactor, scaleRange):
         weights += [scaleFactor * i] * i
     return random.choice(weights)
 
-def boundaryScale(scaleFactor,scaleRange,inN):
+def boundaryScale(scaleFactor,scaleRange,inN,j):
 
     scaledN = []
-    normN = []
 
     for i in inN:
     
@@ -18,7 +17,4 @@ def boundaryScale(scaleFactor,scaleRange,inN):
         scaledN.append(i)
 
     m = max(scaledN)
-    for j in scaledN:
-        normN.append(j/m)
-
-    return normN
+    return j/m
