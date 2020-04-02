@@ -54,6 +54,7 @@ def main(argv):
     print(df.head(10))
     print(df.describe())
     print(df.info)
+    df.to_csv('out.csv', index=False)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
