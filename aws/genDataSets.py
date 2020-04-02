@@ -9,6 +9,9 @@ import numpy as np
 from gendata import genCurve
 from datetime import datetime, timedelta, date
 
+#./genDataSets.py -x 1 -m 0 -i .1 
+
+
 def main(argv):
     usage = 'aws.py -s <seed> -x <max> -m <min> -i <inc>'
 
