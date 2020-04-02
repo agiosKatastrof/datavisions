@@ -25,21 +25,21 @@ def main(argv):
         startt += delta
 
     n = len(times)
-#def genCurve(seed,max,min,incFactor,n,incWeights):
+#def genCurve(seed,max,min,incFactor,n,incWeights,*spike):
 
     incWeights1 = [-1,-1,-1,1]
     incWeights2 = [-1,-0.5,.75,1]
     incWeights3 = [-1,-1,-1,1]
-    out1 = genCurve(0.5,1,0,0.1,n,incWeights1)   
-    out2 = genCurve(0.8,.9,0,0.1,n,incWeights2)   
-    out3 = genCurve(0.1,.4,0,0.1,n,incWeights3)   
 
+    out1 = genCurve(0.5,1,0,0.1,n,incWeights1)   
+    out2 = genCurve(0.8,1,0,0.1,n,incWeights2)   
+    out3 = genCurve(0.1,1,0,0.1,n,incWeights3,spike=1000,spikeFactor=100)   
 
     data = {'datetime':times, instances[0]:out1, instances[1]:out2, instances[2]:out3}
     df = pd.DataFrame(data)
-    print(df.head(10))
-    print(df.describe())
-    print(df.info)
+   # print(df.head(10))
+    #print(df.describe())
+    #print(df.info)
     df.to_csv('/home/joe/data/aws/out.csv', index=False)
 
 if __name__ == "__main__":
