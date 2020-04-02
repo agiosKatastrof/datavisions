@@ -28,7 +28,7 @@ def main(argv):
 #def genCurve(seed,max,min,incFactor,n,incWeights):
 
     incWeights1 = [-1,-1,-1,1]
-    incWeights2 = [-1,-1,-1,1]
+    incWeights2 = [-1,-0.5,.75,1]
     incWeights3 = [-1,-1,-1,1]
     out1 = genCurve(0.5,1,0,0.1,n,incWeights1)   
     out2 = genCurve(0.8,.9,0,0.1,n,incWeights2)   
