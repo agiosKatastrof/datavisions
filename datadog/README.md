@@ -7,4 +7,4 @@ datadog-by-service.ipynb
 - Examines by-service data
 
 datadog-by-usage-type.ipynb
-- Examines by-usaeg data
+- Examines by-usage-type data
