@@ -5,5 +5,5 @@ with open('/home/joe/data/aws/ec2_types.json') as f:
 
 for InstanceType in data["InstanceTypes"]:
     print(InstanceType, "\n")
-    print(InstanceType["VCpuInfo"], "\n")
-    print(InstanceType["MemoryInfo"], "\n")
+    print(InstanceType["VCpuInfo"]["DefaultVCpus"], "\n")
+    print(InstanceType["MemoryInfo"]['SizeInMiB'], "\n")
